@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"discgolf/database"
-	"discgolf/models"
+	"discgolf/discgolfdb"
+	// "discgolf/models"
 
 	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
@@ -26,10 +26,24 @@ func main() {
 	defer DISCGOLFDATBASE.Close()
 
 	router.HandleFunc("/", hello).Methods(http.MethodPost)
-	
+	router.HandleFunc("/", getDiscsHandler).Methods(http.MethodPost)
 
 	http.ListenAndServe(":8000", router)
 }
+
 func hello(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hey there!"))
+}
+
+func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
+	discs := discgolfdb.GetAllDiscs(DISCGOLFDATBASE)
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(discsJson)
 }
