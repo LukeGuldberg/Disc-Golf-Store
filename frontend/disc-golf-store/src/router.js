@@ -1,29 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from './components/Home.vue';
-import DiscCategory from './components/DiscCategory.vue';
-import DiscDetails from './components/DiscDetails.vue';
+import HomePage from '@/components/HomePage.vue';
+import DiscItem from '@/components/DiscItem.vue';
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/category/:id',
-            name: 'disc-category',
-            component: DiscCategory,
-            props: true,
-        },
-        {
-            path: '/disc/:id',
-            name: 'disc-details',
-            component: DiscDetails,
-            props: true,
-        },
-    ],
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home-page',
+      component: HomePage
+    },
+    {
+      path: '/item',
+      name: 'disc-item',
+      component: DiscItem
+    }
+  ]
 });
 
 export default router;
