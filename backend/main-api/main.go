@@ -26,7 +26,7 @@ func main() {
 	defer DISCGOLFDATBASE.Close()
 
 	router.HandleFunc("/", hello).Methods(http.MethodPost)
-	router.HandleFunc("/", getDiscsHandler).Methods(http.MethodPost)
+	router.HandleFunc("/getdiscs", getDiscsHandler).Methods(http.MethodPost)
 
 	http.ListenAndServe(":8000", router)
 }

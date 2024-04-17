@@ -24,7 +24,7 @@ func GetAllDiscs(db *sql.DB) []models.Disc {
 		var glide int
 		var turn int
 		var fade int
-		row.Scan(&discId, name, typ, manufacturer, speed, glide, turn, fade)
+		row.Scan(&discId, &name, &typ, &manufacturer, &speed, &glide, &turn, &fade)
 		disc := models.Disc{
 			DiscId:       discId,
 			Name:         name,
