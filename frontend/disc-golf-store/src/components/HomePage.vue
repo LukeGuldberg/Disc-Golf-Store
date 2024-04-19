@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <h1>Disc Golf Store</h1>
-    <div v-if="discs.length">
+    <div v-if="discs && discs.length">
       <DiscItem v-for="disc in discs" :key="disc.discId" :disc="disc" />
     </div>
     <div v-else>
-      Loading discs or none available...
+        Loading discs or none available...
     </div>
   </div>
 </template>
@@ -20,24 +20,34 @@ export default {
   },
   data() {
     return {
-      discs: [] // Array to store fetched discs
+      discs: []
     };
   },
   mounted() {
     this.fetchDiscs();
   },
   methods: {
-    fetchDiscs() {
-      fetch('http://localhost:8080/getdiscs') // Update URL as per your backend
-        .then(response => response.json())
-        .then(data => {
-          this.discs = data; // Assign fetched data to discs array
-        })
-        .catch(error => {
-          console.error('Error fetching discs:', error);
-        });
-    }
+  fetchDiscs() {
+    fetch('http://localhost:8000/getdiscs', {
+      method: 'POST'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Data received:", data); // This will show us the structure of the received data
+      this.discs = data;
+    })
+    .catch(error => {
+      console.error('Error fetching discs:', error);
+    });
+
   }
+}
+
 }
 </script>
 

@@ -1,9 +1,9 @@
 <template>
   <div class="disc-item">
-    <h3>{{ disc.name }}</h3>
-    <p>Type: {{ disc.type }}</p>
-    <p>Speed: {{ disc.speed }}, Glide: {{ disc.glide }}, Turn: {{ disc.turn }}, Fade: {{ disc.fade }}</p>
-    <p>Manufacturer: {{ disc.manufacturer }}</p>
+    <h3>{{ disc.Name }}</h3> <!-- Capitalize the first letter -->
+    <p>Type: {{ disc.Type }}</p> <!-- Capitalize the first letter -->
+    <p>Speed: {{ disc.Speed }}, Glide: {{ disc.Glide }}, Turn: {{ disc.Turn }}, Fade: {{ disc.Fade }}</p> <!-- Capitalize the first letter -->
+    <p>Manufacturer: {{ disc.Manufacturer }}</p> <!-- Capitalize the first letter -->
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  mounted() {
+    console.log("Disc received in component:", this.disc); // This will now display properly formatted disc data
   }
 }
 </script>
