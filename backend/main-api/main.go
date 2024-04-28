@@ -28,11 +28,9 @@ func main() {
 	router.HandleFunc("/", hello).Methods(http.MethodPost)
 	router.HandleFunc("/getdiscs", getDiscsHandler).Methods(http.MethodPost)
 	router.HandleFunc("/getdiscbyname", getDiscByNameHandler).Methods(http.MethodPost)
-	// getInnova
-	// getDiscraft
-	// getDynamicDiscs
-	// getDiscByName
-	// create a new database that includes a spot for an image, description, and a price + everything we already have
+	router.HandleFunc("/getInnova", getInnovaHandler).Methods(http.MethodPost)
+	router.HandleFunc("/getDiscraft", getDiscraftHandler).Methods(http.MethodPost)
+	router.HandleFunc("/getDynamicDiscs", getDynamicDiscsHandler).Methods(http.MethodPost)
 
 	http.ListenAndServe(":8000", router)
 }
@@ -75,4 +73,55 @@ func getDiscByNameHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discJson)
+}
+
+func getInnovaHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByManufacturer(DISCGOLFDATABASE, "Innova")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
+}
+
+func getDiscraftHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByManufacturer(DISCGOLFDATABASE, "Discraft")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
+}
+
+func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByManufacturer(DISCGOLFDATABASE, "Dynamic Discs")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
 }
