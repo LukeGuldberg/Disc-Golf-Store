@@ -13,20 +13,26 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var DISCGOLFDATBASE *sql.DB
+var DISCGOLFDATABASE *sql.DB
 
 func main() {
 	router := mux.NewRouter()
 
 	var err error
-	DISCGOLFDATBASE, err = sql.Open("sqlite3", "../database/discgolf.db")
+	DISCGOLFDATABASE, err = sql.Open("sqlite3", "../database/discgolf.db")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer DISCGOLFDATBASE.Close()
+	defer DISCGOLFDATABASE.Close()
 
 	router.HandleFunc("/", hello).Methods(http.MethodPost)
 	router.HandleFunc("/getdiscs", getDiscsHandler).Methods(http.MethodPost)
+	router.HandleFunc("/getdiscbyname", getDiscByNameHandler).Methods(http.MethodPost)
+	// getInnova
+	// getDiscraft
+	// getDynamicDiscs
+	// getDiscByName
+	// create a new database that includes a spot for an image, description, and a price + everything we already have
 
 	http.ListenAndServe(":8000", router)
 }
@@ -36,7 +42,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
-	discs := discgolfdb.GetAllDiscs(DISCGOLFDATBASE)
+	discs := discgolfdb.GetAllDiscs(DISCGOLFDATABASE)
 
 	discsJson, err := json.Marshal(discs)
 	if err != nil {
@@ -46,4 +52,27 @@ func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
+}
+
+func getDiscByNameHandler(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("name")
+	if name == "" {
+		http.Error(w, "Name parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	disc, err := discgolfdb.GetDiscByName(DISCGOLFDATABASE, name)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discJson, err := json.Marshal(disc)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discJson)
 }
