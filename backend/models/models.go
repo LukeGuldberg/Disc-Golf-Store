@@ -9,4 +9,7 @@ type Disc struct {
 	Glide int
 	Turn int
 	Fade int
+	ImageFileName string
+	Description string
+	Price float64
 }
