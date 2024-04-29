@@ -31,6 +31,11 @@ func main() {
 	router.HandleFunc("/getInnova", getInnovaHandler).Methods("GET")
 	router.HandleFunc("/getDiscraft", getDiscraftHandler).Methods("GET")
 	router.HandleFunc("/getDynamicDiscs", getDynamicDiscsHandler).Methods("GET")
+	router.HandleFunc("/getdistancedrivers", getDistanceDriversHandler).Methods("GET")
+	router.HandleFunc("/getfairwaydrivers", getFairwayDriversHandler).Methods("GET")
+	router.HandleFunc("/getmidranges", getMidrangesHandler).Methods("GET")
+	router.HandleFunc("/getputters", getPuttersHandler).Methods("GET")
+
 
 	http.ListenAndServe(":8000", router)
 }
@@ -118,5 +123,73 @@ func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Write(discsJson)
+}
+
+func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Distance Driver")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
+}
+
+func getFairwayDriversHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Fairway Driver")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
+}
+
+func getMidrangesHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Midrange")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(discsJson)
+}
+
+func getPuttersHandler(w http.ResponseWriter, r *http.Request) {
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Putter")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	discsJson, err := json.Marshal(discs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
 }
