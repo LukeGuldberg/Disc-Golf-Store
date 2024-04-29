@@ -13,13 +13,15 @@ import Innova from './Innova.vue';
 import Discraft from './Discraft.vue';
 import DynamicDiscs from './DynamicDiscs.vue';
 import SearchResults from './Search.vue';
+import Checkout from './Checkout.vue';
 
 const routes = [
   { path: '/', component: Home },
   { path: '/innova', component: Innova },
   { path: '/discraft', component: Discraft },
   { path: '/dynamicdiscs', component: DynamicDiscs },
-  { path: '/search', name: 'search', component: SearchResults, props: (route) => ({ query: route.query.name }) }
+  { path: '/search', name: 'search', component: SearchResults, props: (route) => ({ query: route.query.name }) },
+  { path: '/checkout', name: 'checkout', component: Checkout },
 ];
 
 const router = createRouter({

@@ -15,12 +15,14 @@
       </div>
       <p class="description">{{ disc.Description }}</p>
       <p class="price">Price: ${{ disc.Price.toFixed(2) }}</p>
+      <button @click="addToCart(disc)">Add to Cart</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   disc: {
@@ -29,9 +31,17 @@ const props = defineProps({
   }
 });
 
+const router = useRouter();
 const imageURL = computed(() => {
-  return `/images/${props.disc.Name.toLowerCase()}.png`;
+  return `/images/${props.disc.ImageFileName}`;
 });
+
+const addToCart = (disc) => {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push(disc);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  router.push({ name: 'checkout' });
+};
 </script>
 
 <style scoped>
@@ -70,5 +80,19 @@ const imageURL = computed(() => {
 
 .spec {
   margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 </style>
