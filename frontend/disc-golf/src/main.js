@@ -12,12 +12,14 @@ import Home from './Home.vue';
 import Innova from './Innova.vue';
 import Discraft from './Discraft.vue';
 import DynamicDiscs from './DynamicDiscs.vue';
+import SearchResults from './Search.vue';
 
 const routes = [
   { path: '/', component: Home },
   { path: '/innova', component: Innova },
   { path: '/discraft', component: Discraft },
-  { path: '/dynamicdiscs', component: DynamicDiscs }
+  { path: '/dynamicdiscs', component: DynamicDiscs },
+  { path: '/search', name: 'search', component: SearchResults, props: (route) => ({ query: route.query.name }) }
 ];
 
 const router = createRouter({

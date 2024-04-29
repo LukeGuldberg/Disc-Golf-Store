@@ -21,16 +21,15 @@ body {
 
 #app {
   display: flex;
+  flex-direction: column; /* Adjust to column to stack Navbar and content */
   min-height: 100vh;
 }
 
-/* Ensure the content div starts to the right of the navbar */
 .content {
   flex-grow: 1;
   padding: 20px;
-  margin-left: 250px; /* Adjust this value based on the actual width of your navbar */
   background: #fff;
-  box-shadow: -1px 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   overflow-y: auto;
 }
 
