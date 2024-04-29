@@ -25,6 +25,7 @@ function searchDisc() {
       <router-link to="/innova" class="nav-item">Innova Discs</router-link>
       <router-link to="/discraft" class="nav-item">Discraft Discs</router-link>
       <router-link to="/dynamicdiscs" class="nav-item">Dynamic Discs</router-link>
+      <router-link to="/checkout" class="nav-item">Checkout</router-link>
     </div>
     <form @submit.prevent="searchDisc" class="search-form">
       <input type="text" v-model="searchQuery" placeholder="Search Discs" />

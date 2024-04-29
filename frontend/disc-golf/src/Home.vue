@@ -2,7 +2,7 @@
   <div>
     <h1>Disc Golf Store</h1>
     <div v-if="discs.length">
-      <DiscCard v-for="disc in discs" :key="disc.discId" :disc="disc" />
+      <DiscCard v-for="disc in discs" :key="disc.discId" :disc="disc" @checkout="handleCheckout" />
     </div>
     <div v-else>
       <p>Loading discs...</p>
@@ -12,9 +12,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import DiscCard from './components/DiscCard.vue';
 
 const discs = ref([]);
+const router = useRouter();
 
 onMounted(async () => {
   try {
@@ -25,8 +27,8 @@ onMounted(async () => {
     console.error('Failed to fetch discs:', error);
   }
 });
+
+const handleCheckout = (disc) => {
+  router.push({ name: 'checkout', params: { discId: disc.DiscId } });
+};
 </script>
-
-<style scoped>
-
-</style>
