@@ -123,7 +123,7 @@ func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
 
 func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Distance Driver")
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "DistanceDriver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -140,7 +140,7 @@ func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
 
 func getFairwayDriversHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Fairway Driver")
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "FairwayDriver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
