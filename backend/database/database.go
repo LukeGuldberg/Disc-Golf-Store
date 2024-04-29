@@ -62,3 +62,24 @@ func GetDiscsByManufacturer(db *sql.DB, manufacturer string) ([]models.Disc, err
 
 	return discs, nil
 }
+
+func GetDiscsByType(db *sql.DB, discType string) ([]models.Disc, error) {
+	var discs []models.Disc
+
+	rows, err := db.Query("SELECT * FROM Discs WHERE type = ?", discType)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var disc models.Disc
+		err := rows.Scan(&disc.DiscId, &disc.Name, &disc.Type, &disc.Manufacturer, &disc.Speed, &disc.Glide, &disc.Turn, &disc.Fade, &disc.ImageFileName, &disc.Description, &disc.Price)
+		if err != nil {
+			log.Fatal(err)
+		}
+		discs = append(discs, disc)
+	}
+
+	return discs, nil
+}
