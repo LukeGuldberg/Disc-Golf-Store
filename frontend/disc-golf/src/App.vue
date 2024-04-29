@@ -21,7 +21,7 @@ body {
 
 #app {
   display: flex;
-  flex-direction: column; /* Adjust to column to stack Navbar and content */
+  flex-direction: column;
   min-height: 100vh;
 }
 

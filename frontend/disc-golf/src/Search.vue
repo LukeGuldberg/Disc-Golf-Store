@@ -37,7 +37,7 @@ watch(() => route.query.name, (newQuery) => {
 
 async function fetchDisc(name) {
   try {
-    const response = await fetch(`http://localhost:8000/getdiscbyname?name=${name}`);
+    const response = await fetch(`http://localhost:8000/getdiscsbyname?name=${name}`);
     if (response.ok) {
       disc.value = await response.json();
       error.value = null; 

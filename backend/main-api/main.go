@@ -122,6 +122,7 @@ func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Distance Driver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -134,11 +135,11 @@ func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
 }
 
 func getFairwayDriversHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Fairway Driver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -151,11 +152,11 @@ func getFairwayDriversHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
 }
 
 func getMidrangesHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Midrange")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -168,11 +169,11 @@ func getMidrangesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
 }
 
 func getPuttersHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Putter")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -185,6 +186,5 @@ func getPuttersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(discsJson)
 }
