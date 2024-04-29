@@ -1,13 +1,19 @@
+<script setup>
+
+</script>
+
 <template>
   <div id="app">
+    <div class="navbar">
+      <router-link to="/">Home</router-link>
+      <router-link to="/innova">Innova Discs</router-link>
+      <router-link to="/discraft">Discraft Discs</router-link>
+      <router-link to="/dynamicdiscs">Dynamic Discs</router-link>
+    </div>
     <router-view/>
   </div>
 </template>
 
-<script setup>
-// Import any global styles or components here if necessary
-</script>
-
 <style>
-/* Global styles */
+/* styles as above */
 </style>
