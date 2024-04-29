@@ -8,21 +8,25 @@ import * as directives from 'vuetify/directives';
 import { mdi } from 'vuetify/iconsets/mdi';
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Importing your components
 import Home from './Home.vue';
+import Innova from './Innova.vue';
+import Discraft from './Discraft.vue';
+import DynamicDiscs from './DynamicDiscs.vue';
+import SearchResults from './Search.vue';
 
-// Define your routes here
 const routes = [
-  { path: '/', component: Home }
+  { path: '/', component: Home },
+  { path: '/innova', component: Innova },
+  { path: '/discraft', component: Discraft },
+  { path: '/dynamicdiscs', component: DynamicDiscs },
+  { path: '/search', name: 'search', component: SearchResults, props: (route) => ({ query: route.query.name }) }
 ];
 
-// Create the router instance
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
-// Create the Vuetify instance
 const vuetify = createVuetify({
   components,
   directives,
@@ -34,8 +38,7 @@ const vuetify = createVuetify({
   },
 });
 
-// Create and mount the app
 createApp(App)
-  .use(router)  // Make sure to use the router
+  .use(router)  
   .use(vuetify)
   .mount('#app');
