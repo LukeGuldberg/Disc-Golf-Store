@@ -4,8 +4,10 @@
     <div v-if="error">
       <p>Error: {{ error }}</p>
     </div>
-    <div v-else-if="disc">
-      <DiscCard :disc="disc" />
+    <div v-else-if="discs && discs.length > 0">
+      <div v-for="disc in discs" :key="disc.discId">
+        <DiscCard :disc="disc" />
+      </div>
     </div>
     <div v-else>
       <p>No results found.</p>
@@ -19,7 +21,7 @@ import { useRoute } from 'vue-router';
 import DiscCard from './components/DiscCard.vue';
 
 const route = useRoute();
-const disc = ref(null);
+const discs = ref(null);
 const query = ref(''); 
 const error = ref(null); 
 
@@ -39,14 +41,14 @@ async function fetchDisc(name) {
   try {
     const response = await fetch(`http://localhost:8000/getdiscsbyname?name=${name}`);
     if (response.ok) {
-      disc.value = await response.json();
+      discs.value = await response.json();
       error.value = null; 
     } else {
       throw new Error('Failed to fetch disc');
     }
   } catch (error) {
     console.error('Error fetching disc:', error);
-    disc.value = null; 
+    discs.value = null; 
     error.value = error.message;
   }
 }
