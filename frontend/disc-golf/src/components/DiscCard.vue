@@ -8,10 +8,10 @@
       <p class="type">{{ disc.Type }}</p>
       <p class="manufacturer">{{ disc.Manufacturer }}</p>
       <div class="specs">
-        <span>Speed: {{ disc.Speed }}</span>
-        <span>Glide: {{ disc.Glide }}</span>
-        <span>Turn: {{ disc.Turn }}</span>
-        <span>Fade: {{ disc.Fade }}</span>
+        <span class="spec">Speed: {{ disc.Speed }}</span>
+        <span class="spec">Glide: {{ disc.Glide }}</span>
+        <span class="spec">Turn: {{ disc.Turn }}</span>
+        <span class="spec">Fade: {{ disc.Fade }}</span>
       </div>
       <p class="description">{{ disc.Description }}</p>
       <p class="price">Price: ${{ disc.Price.toFixed(2) }}</p>
@@ -30,14 +30,13 @@ const props = defineProps({
 });
 
 const imageURL = computed(() => {
-  return new URL(`../assets/${props.disc.ImageFileName}`, import.meta.url).href;
+  return `/images/${props.disc.Name.toLowerCase()}.png`;
 });
 </script>
 
 <style scoped>
 .disc-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -52,43 +51,24 @@ const imageURL = computed(() => {
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
+.image-container {
+  flex: 0 0 auto;
+}
+
 .image-container img {
   width: 100%;
-  height: auto;
-  display: block; 
+  height: auto; 
+  display: block;
+  max-width: 150px;
 }
 
 .content {
   padding: 15px;
   background-color: #fff;
+  flex-grow: 1;
 }
 
-.content h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.specs {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  margin: 10px 0;
-}
-
-.specs span {
-  background: #f4f4f4;
-  padding: 3px 6px;
-  border-radius: 4px;
-}
-
-.description {
-  font-size: 0.9em;
-  color: #666;
-  margin: 10px 0;
-}
-
-.price {
-  font-weight: bold;
-  color: #2c3e50;
+.spec {
+  margin-right: 10px;
 }
 </style>
