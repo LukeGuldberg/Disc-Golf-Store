@@ -27,7 +27,7 @@ func main() {
 
 	router.HandleFunc("/", hello).Methods("GET")
 	router.HandleFunc("/getdiscs", getDiscsHandler).Methods("GET")
-	router.HandleFunc("/getdiscbyname", getDiscByNameHandler).Methods("GET")
+	router.HandleFunc("/getdiscsbyname", getDiscsByNameHandler).Methods("GET")
 	router.HandleFunc("/getInnova", getInnovaHandler).Methods("GET")
 	router.HandleFunc("/getDiscraft", getDiscraftHandler).Methods("GET")
 	router.HandleFunc("/getDynamicDiscs", getDynamicDiscsHandler).Methods("GET")
@@ -36,22 +36,21 @@ func main() {
 	router.HandleFunc("/getmidranges", getMidrangesHandler).Methods("GET")
 	router.HandleFunc("/getputters", getPuttersHandler).Methods("GET")
 
-
 	http.ListenAndServe(":8000", router)
 }
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Content-Type", "application/json") 
+	(*w).Header().Set("Content-Type", "application/json")
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w) 
+	enableCors(&w)
 	w.Write([]byte("Hey there!"))
 }
 
 func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w) 
+	enableCors(&w)
 	discs := discgolfdb.GetAllDiscs(DISCGOLFDATABASE)
 	discsJson, err := json.Marshal(discs)
 	if err != nil {
@@ -61,28 +60,24 @@ func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(discsJson)
 }
 
-func getDiscByNameHandler(w http.ResponseWriter, r *http.Request) {
+func getDiscsByNameHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	name := r.URL.Query().Get("name") 
+	name := r.URL.Query().Get("name")
 	if name == "" {
 		http.Error(w, "Name parameter is required", http.StatusBadRequest)
 		return
 	}
-	disc, err := discgolfdb.GetDiscByName(DISCGOLFDATABASE, name)
+	discs := discgolfdb.GetDiscsByName(DISCGOLFDATABASE, name)
+	discsJson, err := json.Marshal(discs)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	discJson, err := json.Marshal(disc)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Write(discJson)
+	w.Write(discsJson)
 }
 
 func getInnovaHandler(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w) 
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByManufacturer(DISCGOLFDATABASE, "Innova")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -112,7 +107,7 @@ func getDiscraftHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w) 
+	enableCors(&w)
 	discs, err := discgolfdb.GetDiscsByManufacturer(DISCGOLFDATABASE, "Dynamic Discs")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

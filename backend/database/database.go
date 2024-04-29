@@ -27,19 +27,25 @@ func GetAllDiscs(db *sql.DB) []models.Disc {
 	return discs
 }
 
-func GetDiscByName(db *sql.DB, name string) (models.Disc, error) {
-	var disc models.Disc
+func GetDiscsByName(db *sql.DB, name string) []models.Disc {
+	var discs []models.Disc
 
-	row := db.QueryRow("SELECT * FROM Discs WHERE name LIKE ?", "%" + name + "%")
-	err := row.Scan(&disc.DiscId, &disc.Name, &disc.Type, &disc.Manufacturer, &disc.Speed, &disc.Glide, &disc.Turn, &disc.Fade, &disc.ImageFileName, &disc.Description, &disc.Price)
+	row, err := db.Query("SELECT * FROM Discs WHERE name LIKE ?", "%"+name+"%")
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return disc, err
-		}
 		log.Fatal(err)
 	}
+	defer row.Close()
 
-	return disc, nil
+	for row.Next() {
+		var disc models.Disc
+		err := row.Scan(&disc.DiscId, &disc.Name, &disc.Type, &disc.Manufacturer, &disc.Speed, &disc.Glide, &disc.Turn, &disc.Fade, &disc.ImageFileName, &disc.Description, &disc.Price)
+		if err != nil {
+			log.Fatal(err)
+		}
+		discs = append(discs, disc)
+	}
+
+	return discs
 }
 
 func GetDiscsByManufacturer(db *sql.DB, manufacturer string) ([]models.Disc, error) {
