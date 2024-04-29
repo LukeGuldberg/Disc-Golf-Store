@@ -30,7 +30,7 @@ func GetAllDiscs(db *sql.DB) []models.Disc {
 func GetDiscByName(db *sql.DB, name string) (models.Disc, error) {
 	var disc models.Disc
 
-	row := db.QueryRow("SELECT * FROM Discs WHERE name = ?", name)
+	row := db.QueryRow("SELECT * FROM Discs WHERE name LIKE ?", "%" + name + "%")
 	err := row.Scan(&disc.DiscId, &disc.Name, &disc.Type, &disc.Manufacturer, &disc.Speed, &disc.Glide, &disc.Turn, &disc.Fade, &disc.ImageFileName, &disc.Description, &disc.Price)
 	if err != nil {
 		if err == sql.ErrNoRows {
