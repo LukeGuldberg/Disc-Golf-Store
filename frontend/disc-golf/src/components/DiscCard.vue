@@ -1,23 +1,30 @@
 <template>
   <div class="disc-card">
-    <h2>{{ disc.name }}</h2>
-    <p>Type: {{ disc.typ }}</p>
-    <p>Manufacturer: {{ disc.manufacturer }}</p>
-    <p>Speed: {{ disc.speed }}</p>
-    <p>Glide: {{ disc.glide }}</p>
-    <p>Turn: {{ disc.turn }}</p>
-    <p>Fade: {{ disc.fade }}</p>
+    <img :src="imageURL" :alt="disc.Name" />
+    <h2>{{ disc.Name }}</h2>
+    <p>Type: {{ disc.Type }}</p>
+    <p>Manufacturer: {{ disc.Manufacturer }}</p>
+    <p>Speed: {{ disc.Speed }}</p>
+    <p>Glide: {{ disc.Glide }}</p>
+    <p>Turn: {{ disc.Turn }}</p>
+    <p>Fade: {{ disc.Fade }}</p>
+    <p>Description: {{ disc.Description }}</p>
+    <p>Price: ${{ disc.Price.toFixed(2) }}</p>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 
 const props = defineProps({
   disc: {
     type: Object,
     required: true
   }
+});
+
+const imageURL = computed(() => {
+  return new URL(`../assets/${props.disc.ImageFileName}`, import.meta.url).href;
 });
 </script>
 
@@ -27,5 +34,13 @@ const props = defineProps({
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.disc-card img {
+  max-width: 100%;
+  height: auto;
 }
 </style>

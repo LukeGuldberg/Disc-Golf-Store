@@ -28,5 +28,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Styles specific to Home component */
+
 </style>
