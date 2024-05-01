@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
@@ -54,6 +54,7 @@ const addToCart = (disc) => {
   margin: 10px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
 }
 
 .disc-card:hover {
@@ -62,20 +63,20 @@ const addToCart = (disc) => {
 }
 
 .image-container {
-  flex: 0 0 auto;
+  flex: 1 1 20%;
+  max-width: 200px;
 }
 
 .image-container img {
   width: 100%;
-  height: auto; 
+  height: auto;
   display: block;
-  max-width: 150px;
 }
 
 .content {
   padding: 15px;
   background-color: #fff;
-  flex-grow: 1;
+  flex: 1 1 80%;
 }
 
 .spec {
