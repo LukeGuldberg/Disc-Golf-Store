@@ -25,7 +25,6 @@ func main() {
 	}
 	defer DISCGOLFDATABASE.Close()
 
-	router.HandleFunc("/", hello).Methods("GET")
 	router.HandleFunc("/getdiscs", getDiscsHandler).Methods("GET")
 	router.HandleFunc("/getdiscsbyname", getDiscsByNameHandler).Methods("GET")
 	router.HandleFunc("/getInnova", getInnovaHandler).Methods("GET")
@@ -42,11 +41,6 @@ func main() {
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Content-Type", "application/json")
-}
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	w.Write([]byte("Hey there!"))
 }
 
 func getDiscsHandler(w http.ResponseWriter, r *http.Request) {
@@ -123,7 +117,7 @@ func getDynamicDiscsHandler(w http.ResponseWriter, r *http.Request) {
 
 func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "DistanceDriver")
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Distance Driver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -140,7 +134,7 @@ func getDistanceDriversHandler(w http.ResponseWriter, r *http.Request) {
 
 func getFairwayDriversHandler(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "FairwayDriver")
+	discs, err := discgolfdb.GetDiscsByType(DISCGOLFDATABASE, "Fairway Driver")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
